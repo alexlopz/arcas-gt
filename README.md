@@ -9,6 +9,7 @@ Antes de comenzar, asegúrate de tener instalados los siguientes requisitos en t
 - **Git** (versión 2 o superior) -> (Se uso con 2.37.1) [Descarga](https://git-scm.com/download/win)
 - **Node.js** (versión 14 o superior) -> (Se uso con v22.5.1) [Descarga](https://nodejs.org/)
 - **yarn** (versión 1.22 o superior) -> (Se uso con 1.22.19) [Descarga](https://yarnpkg.com/)
+- **Archivo .env** (Debes solicitarme el archivo .env)
 
 ## Instalación y Ejecución
 
