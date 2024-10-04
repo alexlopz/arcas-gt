@@ -4,6 +4,8 @@
 
 Antes de comenzar, asegúrate de tener instalados los siguientes requisitos en tu sistema:
 
+- **Visual Studio Code** (Editor) ->  [Descarga](https://code.visualstudio.com/download)
+
 - **Git** (versión 2 o superior) -> (Se uso con 2.37.1) [Descarga](https://git-scm.com/download/win)
 - **Node.js** (versión 14 o superior) -> (Se uso con v22.5.1) [Descarga](https://nodejs.org/)
 - **yarn** (versión 1.22 o superior) -> (Se uso con 1.22.19) [Descarga](https://yarnpkg.com/)
@@ -20,26 +22,26 @@ Sigue los siguientes pasos para instalar y ejecutar el proyecto en tu máquina l
 
 2. **Navegar al directorio del proyecto:**
 
-```bash
-cd arcas-gt
-```
+   ```bash
+   cd arcas-gt
+   ```
 
-3. **Instalar las dependencias del proyecto:**
+3. **Instalar las dependencias del proyecto (Asegurate de estar en el directorio del proyecto):**
 
-```bash
-yarn
-```
+   ```bash
+   yarn
+   ```
 
 4. **Iniciar el servidor de desarrollo:**
 
-```bash
-yarn dev
+   ```bash
+   yarn dev
 
-```
+   ```
 
-5. **Iniciar el servidor de desarrollo:**
+5. **Ver el proyecto corriendo en el servidor de desarrollo:**
 
-Visita la dirección que aparece en la terminal, típicamente http://localhost:3000.
+   Visita la dirección que aparece en la terminal, típicamente http://localhost:3000.
 
 ## Construcción
 
@@ -61,7 +63,7 @@ Visita la dirección que aparece en la terminal, típicamente http://localhost:3
   yarn lint .
   ```
 
-## Links para documentacion de librerias
+## Links de documentación de librerias
 
 - [nextjs](https://nextjs.org/docs/getting-started)
 - [material ui](https://mui.com/material-ui/getting-started/)
