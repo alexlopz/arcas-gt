@@ -16,8 +16,6 @@ function ToggleColor() {
   const mode = React.useState(theme.palette.mode);
   const { toggleColorMode } = React.useContext(ColorModeContext);
   const _mode = mode === "dark" ? "light" : "dark";
-  // console.log(theme.palette.mode);
-  // console.log(_mode);
   return (
     <Box
       sx={{

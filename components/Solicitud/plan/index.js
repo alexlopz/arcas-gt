@@ -35,8 +35,6 @@ export default function AgregarPlan(props) {
 
   const handleChangeSede = (e) => {
     const { name, value } = e.target;
-    console.log("name: ", name);
-    console.log("value: ", value);
     getDataPlanes(value);
     setSolicitud((prev) => ({ ...prev, [name]: value }));
   };

@@ -130,7 +130,6 @@ export default function RegistroSolicitud(props) {
       }
 
       if (user) {
-        console.log("userNew: ", user);
         setFormData(formDataDefault);
         setLoadUsers(true);
         handleCancelAction();

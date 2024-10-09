@@ -10,27 +10,23 @@ const setAuthInfoCookie = (result) => {
     const expirationDate = new Date(expirationTimeInSeconds * 1000);
 
     Cookies.set("token", result.token, {
-      expires: expirationDate,
       secure: false, //TODO Cambiar a true en producción con HTTPS
       sameSite: "Strict",
       path: "/",
     });
 
     Cookies.set("user-info", JSON.stringify(result.user), {
-      expires: expirationDate,
       secure: false, //TODO Cambiar a true en producción con HTTPS
       sameSite: "Strict",
       path: "/",
     });
   } catch (error) {
-    console.log("decode error", error);
+    console.error("decode error", error);
   }
 };
 
 export const getAuthInfoUser = async (username, password) => {
   try {
-    console.log("apiUrl: ", apiUrl);
-
     const url = `${apiUrl}/Api/Auth/login`;
 
     const payload = { username, password };

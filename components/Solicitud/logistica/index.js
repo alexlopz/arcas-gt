@@ -18,8 +18,10 @@ const formDataDefault = {
   llegaPorCuentaPropia: null,
 };
 const transportes = [
-  { label: "Aereo", value: "aereo" },
-  { label: "Terrestre", value: "terrestre" },
+  { label: "Avión", value: "Avión" },
+  { label: "Bus", value: "Bus" },
+  { label: "Transporte privado", value: "Transporte privado" },
+  { label: "Otro", value: "Otro" },
 ];
 
 const respuestas = [
@@ -30,6 +32,7 @@ const FormLogistica = forwardRef((props, ref) => {
   const { solicitud, setSolicitud, handlerLogisticaForm, setLoading } = props;
   const [formData, setFormData] = useState(formDataDefault);
   const [errors, setErrors] = useState({});
+  const now = new Date().toISOString().slice(0, 16);
 
   const validateField = (name, value) => {
     let error = "";
@@ -73,11 +76,8 @@ const FormLogistica = forwardRef((props, ref) => {
     const error = validateField(name, value);
     setErrors((prev) => ({ ...prev, [name]: error }));
   };
-  console.log("formData: ", formData);
 
   const submit = (isNext) => {
-    console.log("hello moto", isNext);
-
     const newErrors = {};
     for (let key in formData) {
       const error = validateField(key, formData[key]);
@@ -88,7 +88,6 @@ const FormLogistica = forwardRef((props, ref) => {
 
     if (Object.keys(newErrors).length === 0) {
       handlerLogisticaForm(isNext);
-      console.log("todo genial");
       setFormData(null);
     }
     setLoading(false);
@@ -109,12 +108,13 @@ const FormLogistica = forwardRef((props, ref) => {
             label="Fecha y hora"
             type="datetime-local"
             InputLabelProps={{ shrink: true }}
-            value={formData.fechaHora ?? ""}
+            value={solicitud?.logistica?.fechaHora ?? ""}
             onChange={handleChange}
             error={!!errors.fechaHora}
             helperText={errors.fechaHora}
             disabled={false}
             fullWidth
+            inputProps={{ min: now }}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -124,7 +124,7 @@ const FormLogistica = forwardRef((props, ref) => {
               labelId="tipo-transporte-label"
               id="tipotransporte"
               name="tipotransporte"
-              value={formData.tipotransporte ?? ""}
+              value={solicitud?.logistica?.tipotransporte ?? ""}
               onChange={handleChange}
               label="Tipo Transporte"
               disabled={false}
@@ -149,7 +149,7 @@ const FormLogistica = forwardRef((props, ref) => {
             id="descripcion"
             name="descripcion"
             label="Descripcion"
-            value={formData.descripcion}
+            value={solicitud?.logistica?.descripcion}
             onChange={handleChange}
             error={!!errors.descripcion}
             helperText={errors.descripcion}
@@ -164,7 +164,7 @@ const FormLogistica = forwardRef((props, ref) => {
               labelId="tipo-transporte-label"
               id="llegaPorCuentaPropia"
               name="llegaPorCuentaPropia"
-              value={formData.llegaPorCuentaPropia ?? ""}
+              value={solicitud?.logistica?.llegaPorCuentaPropia ?? ""}
               onChange={handleChange}
               label="Llega por cuenta propia"
               disabled={false}

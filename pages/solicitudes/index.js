@@ -72,10 +72,7 @@ export async function getServerSideProps(context) {
     };
   }
   const userCookie = cookies.get("user-info");
-
   const user = JSON.parse(decodeURIComponent(userCookie));
   const solicitudes = await getSolicitudes(token);
-  console.log("solicitudes: ", solicitudes);
-
   return { props: { user, solicitudes: solicitudes?.reverse() } };
 }

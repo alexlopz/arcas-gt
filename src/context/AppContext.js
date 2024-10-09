@@ -8,6 +8,11 @@ const initialState = {
   loadUsers: false,
   voluntario: null,
   documentoPago: null,
+  alertMessage: {
+    open: false,
+    isSuccess: true,
+    message: "",
+  },
 };
 
 // Acciones
@@ -17,6 +22,7 @@ const SET_NEW_VOLUNTARIO = "SET_NEW_VOLUNTARIO";
 const SET_LOAD_USERS = "SET_LOAD_USERS";
 const SET_LOAD_SOLICITUDES = "SET_LOAD_SOLICITUDES";
 const SET_DOCUMENTO_PAGO = "SET_DOCUMENTO_PAGO";
+const SET_ALERT_MESSAGE = "SET_ALERT_MESSAGE";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -50,6 +56,11 @@ const reducer = (state, action) => {
         ...state,
         documentoPago: action.payload,
       };
+    case SET_ALERT_MESSAGE:
+      return {
+        ...state,
+        alertMessage: action.payload,
+      };
     default:
       throw new Error(`Acción no manejada: ${action.type}`);
   }
@@ -80,6 +91,17 @@ const AppContextProvider = ({ children }) => {
   const setDocumentoPago = (value) => {
     dispatch({ type: SET_DOCUMENTO_PAGO, payload: value });
   };
+  const setAlertMessage = (value) => {
+    const alert = {
+      open: value?.open ?? false,
+      isSuccess: value?.isSuccess,
+      message: value?.isSuccess
+        ? "Proceso realizado con exito!"
+        : "Ocurrio un error!",
+    };
+
+    dispatch({ type: SET_ALERT_MESSAGE, payload: alert });
+  };
 
   const value = useMemo(
     () => ({
@@ -89,12 +111,14 @@ const AppContextProvider = ({ children }) => {
       loadSolicitudes: state.loadSolicitudes,
       voluntario: state.voluntario,
       documentoPago: state.documentoPago,
+      alertMessage: state.alertMessage,
       openModal,
       closeModal,
       setLoadUsers,
       setLoadSolicitudes,
       setNewVoluntario,
       setDocumentoPago,
+      setAlertMessage,
     }),
     [
       state.isModalOpen,
@@ -103,6 +127,7 @@ const AppContextProvider = ({ children }) => {
       state.loadSolicitudes,
       state.voluntario,
       state.documentoPago,
+      state.alertMessage,
     ]
   );
 

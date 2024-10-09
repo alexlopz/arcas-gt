@@ -9,8 +9,8 @@ export const createReservacion = async (data) => {
 
     const payload = {
       idSolicitud: data?.id,
-      inicio: data?.inicio,
-      fin: data?.fin,
+      inicio: data?.reservacion?.inicio,
+      fin: data?.reservacion?.fin,
       activa: false,
     };
 
@@ -37,13 +37,13 @@ export const createReservacion = async (data) => {
 
 export const updateReservacion = async (data) => {
   try {
-    const url = `${apiUrl}/Api/Reservacion/4`;
+    const url = `${apiUrl}/Api/Reservacion/${data?.reservacion?.id}`;
     const token = Cookies.get("token");
 
     const payload = {
       idSolicitud: data?.id,
-      inicio: data?.inicio,
-      fin: data?.fin,
+      inicio: data?.reservacion?.inicio,
+      fin: data?.reservacion?.fin,
       activa: true,
     };
 
@@ -60,8 +60,7 @@ export const updateReservacion = async (data) => {
       throw new Error(`Ocurrio un error`);
     }
 
-    const result = await response.json();
-    return result;
+    return true;
   } catch (error) {
     console.error(error);
     return null;

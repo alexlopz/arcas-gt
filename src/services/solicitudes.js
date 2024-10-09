@@ -23,7 +23,7 @@ export const getSolicitudes = async (token) => {
 
     return result;
   } catch (error) {
-    return null;
+    return [];
   }
 };
 
@@ -63,18 +63,15 @@ export const createSolicitud = async (data) => {
     }
 
     const result = await response.json();
-
+    createHistorial(result);
     return result;
   } catch (error) {
     console.error(error);
-
     return null;
   }
 };
 
 export const updateSolicitud = async (data) => {
-  console.log("data: ", data);
-
   try {
     const url = `${apiUrl}/Api/Solicitud/${data?.id}`;
     const token = Cookies.get("token");
@@ -110,7 +107,41 @@ export const updateSolicitud = async (data) => {
     }
 
     const result = await response.json();
+    createHistorial(result);
+    return result;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
 
+export const createHistorial = async (solicitud) => {
+  try {
+    const token = Cookies.get("token");
+    const userCookie = Cookies.get("user-info");
+    const user = JSON.parse(decodeURIComponent(userCookie));
+
+    const payload = {
+      IdSolicitud: solicitud?.id,
+      IdEstado: solicitud?.idEstado,
+      IdUsuario: user?.id,
+    };
+
+    const url = `${apiUrl}/Api/HistorialSolicitud`;
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        [`Authorization`]: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
+      throw new Error(`Ocurrio un error`);
+    }
+
+    const result = await response.json();
     return result;
   } catch (error) {
     console.error(error);
@@ -120,9 +151,11 @@ export const updateSolicitud = async (data) => {
 
 export const deleteSolicitud = async (id) => {
   try {
-    const url = `${apiUrl}/Api/Solicitud/${id}`;
-
     const token = Cookies.get("token");
+    const userCookie = Cookies.get("user-info");
+    const user = JSON.parse(decodeURIComponent(userCookie));
+
+    const url = `${apiUrl}/Api/Solicitud/${id}/${user?.id}`;
 
     const response = await fetch(url, {
       method: "DELETE",

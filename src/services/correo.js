@@ -2,9 +2,9 @@ import Cookies from "js-cookie";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export const sendEmail = async (idUsuario) => {
+export const createEmail = async (idUsuario) => {
   try {
-    const tokenRequest = token ? token : Cookies.get("token");
+    const token = Cookies.get("token");
 
     const url = `${apiUrl}/Api/Email/${idUsuario}`;
 
@@ -12,16 +12,14 @@ export const sendEmail = async (idUsuario) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        [`Authorization`]: `Bearer ${tokenRequest}`,
+        [`Authorization`]: `Bearer ${token}`,
       },
     });
     if (!response.ok) {
       throw new Error(`Ocurrio un error`);
     }
 
-    const result = await response.json();
-
-    return result;
+    return true;
   } catch (error) {
     console.error(error);
     return null;

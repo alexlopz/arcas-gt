@@ -2,10 +2,19 @@ import { Box, Grid, TextField } from "@mui/material";
 
 export default function FechasSolicitud(props) {
   const { setSolicitud, solicitud } = props;
+  const today = new Date().toISOString().split("T")[0];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setSolicitud((prev) => ({ ...prev, [name]: value }));
+
+    setSolicitud((prev) => ({
+      ...prev,
+      reservacion: {
+        ...prev?.reservacion,
+        idSolicitud: solicitud.id,
+        [name]: value,
+      },
+    }));
   };
 
   return (
@@ -25,11 +34,12 @@ export default function FechasSolicitud(props) {
             label="Fecha Inicio"
             type="date"
             InputLabelProps={{ shrink: true }}
-            value={solicitud?.inicio ?? ""}
+            value={solicitud?.reservacion?.inicio?.split("T")[0] ?? ""}
             onChange={handleChange}
             error={false}
             helperText={""}
             disabled={false}
+            inputProps={{ min: today }}
           />
         </Grid>
         <Grid item display="flex" justifyContent="center" alignItems="center">
@@ -40,11 +50,12 @@ export default function FechasSolicitud(props) {
             label="Fecha fin"
             type="date"
             InputLabelProps={{ shrink: true }}
-            value={solicitud?.fin ?? ""}
+            value={solicitud?.reservacion?.fin?.split("T")[0] ?? ""}
             onChange={handleChange}
             error={false}
             helperText={""}
             disabled={false}
+            inputProps={{ min: today }}
           />
         </Grid>
       </Grid>

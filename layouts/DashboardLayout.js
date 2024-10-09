@@ -3,15 +3,12 @@ import { styled, useTheme } from "@mui/material/styles";
 import Cookies from "js-cookie";
 
 /* Components */
-import { ClickAwayListener } from "@mui/base";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Stack from "@mui/material/Stack";
-// import Input from "@mui/material/Input";
-// import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 import {
   Container,
@@ -28,24 +25,17 @@ import {
 
 /* Icons */
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import SearchIcon from "@mui/icons-material/Search";
 import HomeIcon from "@mui/icons-material/HomeOutlined";
 import AccountIcon from "@mui/icons-material/AccountCircle";
 import SettingIcon from "@mui/icons-material/Settings";
 
 /* Components */
-import {
-  mainListItems,
-  secondaryListItems,
-  thirdListItems,
-} from "@components/ListMenu/listItems";
+import { mainListItems } from "@components/ListMenu/listItems";
 
 import AlertBar from "@components/Alert/SnackBar";
 import Copyright from "@components/Copyright";
-import FloatConfig from "@components/Float/Config";
 import FloatNotify from "@components/Float/Notify";
 import ScrollToTop from "@components/Scroll/ToTop";
-import { ToggleColor } from "@components/Toggle/Color";
 
 /* Config */
 import { constant } from "@config/constants";
@@ -209,42 +199,16 @@ function DashboardContent({ page, children }) {
     setAnchorEl(null);
   };
 
-  // const handleClickAway = () => {
-  //   setSearchOpen(false);
-  // };
-
   const itemsNotify = [
     {
       id: 1,
-      author: "Mr. Dimsum",
-      title: "Completely synergize resource taxing relationships",
-      text: "Interactively coordinate proactive e-commerce via process-centric thinking. Completely pursue scalable customer service through sustainable potentialities. Collaboratively administrate turnkey channels whereas virtual e-tailers. Objectively seize scalable metrics whereas proactive e-services. Seamlessly empower fully researched growth strategies and interoperable internal or sources.",
-    },
-    {
-      id: 2,
-      author: "Ms Diane Flock",
-      title:
-        "Objectively innovate empowered manufactured products whereas parallel",
-      text: "Interactively procrastinate high-payoff content without backward-compatible data. Quickly cultivate optimal processes and tactical architectures.",
-    },
-    {
-      id: 3,
-      author: "Lamelo Ball",
-      title:
-        "Proactively envisioned multimedia based expertise and cross-media growth strategies",
-      text: "Quickly disseminate superior deliverables whereas web-enabled applications. Quickly drive clicks-and-mortar catalysts for change before vertical architectures.",
-    },
-    {
-      id: 4,
-      author: "Andre Vicks",
-      title:
-        "Phosfluorescently engage worldwide methodologies with web-enabled technology",
-      text: "Completely synergize scalable e-commerce rather than high standards in e-services. Assertively iterate resource maximizing products after leading-edge intellectual capital.",
+      author: "Test",
+      title: "Es una prueba de una notificacion",
+      text: "Lorem Sit aliqua excepteur tempor fugiat anim sint tempor et. Nulla velit proident in aute dolor cupidatat ullamco occaecat occaecat aliquip. Ea deserunt reprehenderit labore laboris ad eu veniam pariatur occaecat commodo ea amet mollit.",
     },
   ];
 
   const logout = () => {
-    console.log("hola");
     Cookies.remove("token");
     Cookies.remove("user-info");
   };
@@ -381,9 +345,6 @@ function DashboardContent({ page, children }) {
         >
           {mainListItems(open)}
           <Divider sx={{ my: 1 }} />
-          {/* {secondaryListItems(open)}
-          <Divider sx={{ my: 1 }} />
-          {thirdListItems(open)} */}
         </List>
       </Drawer>
       <Box
@@ -404,7 +365,6 @@ function DashboardContent({ page, children }) {
             hidden={false}
             content={{ title: "", description: "", type: "" }}
           />
-          <FloatConfig />
           {children}
           <Copyright />
           <ScrollToTop />

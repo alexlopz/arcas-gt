@@ -43,10 +43,11 @@ const sexos = [
 
 export default function RegistroUsuarios(props) {
   const { handleCancelAction, isEdicion, edicionData, admins } = props;
-  const { setLoadUsers, setNewVoluntario } = useAppContext();
+  const { setLoadUsers, setNewVoluntario, setAlertMessage } = useAppContext();
   const [formData, setFormData] = useState(edicionData || formDataDefault);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const today = new Date().toISOString().split("T")[0];
 
   const validateField = (name, value) => {
     let error = "";
@@ -82,8 +83,13 @@ export default function RegistroUsuarios(props) {
         if (!value) error = "La dirección es requerida.";
         break;
       case "numero":
-        if (!value) error = "El número de teléfono es requerido.";
-        else if (isNaN(value)) error = "El número debe ser válido.";
+        if (!value) {
+          error = "El número de teléfono es requerido asdfas.";
+        } else if (isNaN(value)) {
+          error = "El número debe ser válido.";
+        } else if (value.length > 12) {
+          error = "El número no debe ser mayor a 12 caracteres.";
+        }
         break;
       case "password":
         if (admins && !value) error = "El password es requerido.";
@@ -137,9 +143,13 @@ export default function RegistroUsuarios(props) {
         setFormData(formDataDefault);
         setNewVoluntario(user);
         setLoadUsers(true);
+        setAlertMessage({ open: true, isSuccess: true });
         handleCancelAction();
+        return;
       }
+      setAlertMessage({ open: true, isSuccess: false });
     }
+
     setLoading(false);
   };
 
@@ -148,7 +158,6 @@ export default function RegistroUsuarios(props) {
       setFormData((prev) => ({ ...prev, idTipo: 1 }));
     }
   }, []);
-  console.log("formData: ", formData);
 
   return (
     <Box
@@ -233,6 +242,7 @@ export default function RegistroUsuarios(props) {
           error={!!errors.fechaNacimiento}
           helperText={errors.fechaNacimiento}
           disabled={isEdicion}
+          inputProps={{ max: today }}
         />
         <FormControl
           fullWidth
@@ -338,6 +348,7 @@ export default function RegistroUsuarios(props) {
           onChange={handleChange}
           error={!!errors.numero}
           helperText={errors.numero}
+          inputProps={{ maxLength: 12 }}
         />
         {admins ? (
           <TextField

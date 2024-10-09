@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Paper, Typography, Grid, Box } from "@mui/material";
+import { Avatar, Paper, Typography, Grid, Box, Button } from "@mui/material";
 
-import MapIcon from "@mui/icons-material/MapOutlined";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
+import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
+import OtherHousesOutlinedIcon from "@mui/icons-material/OtherHousesOutlined";
+import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
+
 import { getPdf } from "@src/services/pagos";
 import { base64ToBlob } from "@src/utilities/base64ToBlob";
 import { useAppContext } from "@src/context/AppContext";
+import { DateFormatter } from "@src/utilities/DateFormater";
 
 const PAGO_ADJUNTO_ESTADO_5 = 5;
 
 export default function InfoSolicitud(props) {
-  const { solicitud } = props;
+  const { solicitud, plan } = props;
   const { documentoPago, setDocumentoPago } = useAppContext();
 
   const [base64, setBase64] = useState();
@@ -39,10 +45,8 @@ export default function InfoSolicitud(props) {
     }
   };
   useEffect(() => {
-    console.log("traeeeerr pdf");
-
     if (
-      solicitud.id >= PAGO_ADJUNTO_ESTADO_5 &&
+      solicitud.idEstado >= PAGO_ADJUNTO_ESTADO_5 &&
       solicitud?.tipoPago?.nombre?.toLowerCase() !== "efectivo" &&
       !documentoPago
     ) {
@@ -62,23 +66,52 @@ export default function InfoSolicitud(props) {
     >
       <Grid container>
         <Grid item sm={12}>
-          {solicitud?.plan?.titulo && (
-            <Typography component="div" variant="subtitle2" color="secondary">
-              <MapIcon sx={{ verticalAlign: "middle", fontSize: "1.25rem" }} />{" "}
-              <strong>Plan: </strong>
-              {solicitud?.plan?.titulo}
-            </Typography>
+          {plan?.titulo && (
+            <Box sx={{ display: "flex" }}>
+              <Typography component="div" variant="subtitle2" color="secondary">
+                <StickyNote2OutlinedIcon
+                  sx={{ verticalAlign: "middle", fontSize: "1.25rem" }}
+                />{" "}
+                <strong>Plan: </strong>
+                {plan?.titulo}
+              </Typography>
+              <Typography
+                component="div"
+                variant="subtitle2"
+                color="secondary"
+                sx={{ marginLeft: "10px" }}
+              >
+                <OtherHousesOutlinedIcon
+                  sx={{ verticalAlign: "middle", fontSize: "1.25rem" }}
+                />{" "}
+                <strong>Sede: </strong>
+                {plan?.sede?.nombre}
+              </Typography>
+            </Box>
           )}
-          {solicitud?.plan?.sede?.nombre && (
-            <Typography component="div" variant="subtitle2" color="secondary">
-              <MapIcon sx={{ verticalAlign: "middle", fontSize: "1.25rem" }} />{" "}
-              <strong>Sede: </strong>
-              {solicitud?.plan?.sede?.nombre}
-            </Typography>
+          {solicitud?.reservacion?.inicio && (
+            <>
+              <Typography component="div" variant="subtitle2" color="secondary">
+                <CalendarMonthOutlinedIcon
+                  sx={{ verticalAlign: "middle", fontSize: "1.25rem" }}
+                />{" "}
+                <strong>Fecha entrada: </strong>
+                {DateFormatter(solicitud?.reservacion?.inicio)}
+              </Typography>
+              <Typography component="div" variant="subtitle2" color="secondary">
+                <CalendarMonthOutlinedIcon
+                  sx={{ verticalAlign: "middle", fontSize: "1.25rem" }}
+                />{" "}
+                <strong>Fecha salida: </strong>
+                {DateFormatter(solicitud?.reservacion?.fin)}
+              </Typography>
+            </>
           )}
           {solicitud?.tipoPago?.nombre && (
             <Typography component="div" variant="subtitle2" color="secondary">
-              <MapIcon sx={{ verticalAlign: "middle", fontSize: "1.25rem" }} />{" "}
+              <PaidOutlinedIcon
+                sx={{ verticalAlign: "middle", fontSize: "1.25rem" }}
+              />{" "}
               <strong>Tipo de pago: </strong>
               {solicitud?.tipoPago?.nombre}
             </Typography>
@@ -90,7 +123,9 @@ export default function InfoSolicitud(props) {
               color="secondary"
               onClick={downloadPdf}
             >
-              <MapIcon sx={{ verticalAlign: "middle", fontSize: "1.25rem" }} />{" "}
+              <ReceiptOutlinedIcon
+                sx={{ verticalAlign: "middle", fontSize: "1.25rem" }}
+              />{" "}
               <strong>Comprobante de pago: </strong>
               <span
                 style={{

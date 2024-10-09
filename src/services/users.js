@@ -103,7 +103,7 @@ export const getUsers = async (token) => {
 
     return result;
   } catch (error) {
-    console.error(error);
-    return null;
+    console.error("getUsers ", error);
+    return [];
   }
 };

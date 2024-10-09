@@ -19,7 +19,7 @@ export default function SolicitudesTabla(props) {
   const paginationModel = { page: 0, pageSize: 10 };
 
   const columns = [
-    { field: "id", headerName: "ID", maxWidth: 10 },
+    { field: "id", headerName: "ID", flex: 0.5 },
     {
       field: "estadoNombre",
       headerName: "Estado",
@@ -42,13 +42,25 @@ export default function SolicitudesTabla(props) {
       valueGetter: (params) => params.row.plan?.titulo || "---",
     },
     {
+      field: "pagado",
+      headerName: "Pagado",
+      flex: 0.7,
+      valueGetter: (params) => (params.row?.pagado ? "Si" : "No"),
+    },
+    {
       field: "nombrePago",
       headerName: "Tipo de pago",
       flex: 1,
       valueGetter: (params) => params.row.tipoPago?.nombre || "---",
     },
-    { field: "descargoResponsabilidades", headerName: "Dercargo", flex: 1 },
-    { field: "pagado", headerName: "Pagado", flex: 0.7 },
+    {
+      field: "descargoResponsabilidades",
+      headerName: "Dercargo Resp...",
+      flex: 1,
+      valueGetter: (params) =>
+        params.row?.descargoResponsabilidades ? "Si" : "No",
+    },
+
     {
       field: "actions",
       headerName: "Actions",
@@ -85,7 +97,7 @@ export default function SolicitudesTabla(props) {
   };
 
   const handleClickEliminar = async () => {
-    await deleteSolicitud(solicitud.id);
+    await deleteSolicitud(solicitud?.id);
     setLoadSolicitudes(true);
   };
 

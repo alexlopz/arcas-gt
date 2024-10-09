@@ -14,8 +14,6 @@ export default function Page(props) {
   const [edicionData, setEdicionData] = useState();
 
   const handleClickEdicion = (row) => {
-    console.log("row: ", row);
-
     setEdicionData(row);
     openModal();
   };

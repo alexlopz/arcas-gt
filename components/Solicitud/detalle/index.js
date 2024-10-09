@@ -1,19 +1,20 @@
-import { Grid } from "@mui/material";
-import DetalleProfile from "./profile";
-import InfoSolicitud from "./InfoSolicitud";
+import TabPanel from "@components/tab-panel";
+import InformacionBasica from "./basica";
+import InformacionLogistica from "./logistica";
+import InformacionSaludEmergencia from "./salud-emergencia";
 
 export default function DetalleSolicitud(props) {
   const { solicitud } = props;
-  console.log("data:", solicitud);
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} sm={12} lg={5}>
-        <DetalleProfile voluntario={solicitud?.voluntario} />
-      </Grid>
-      <Grid item xs={12} sm={12} lg={7}>
-        <InfoSolicitud solicitud={solicitud} />
-      </Grid>
-    </Grid>
+    <TabPanel solicitud={solicitud}>
+      <InformacionBasica solicitud={solicitud} />
+      {solicitud?.logistica && (
+        <InformacionLogistica logistica={solicitud?.logistica} />
+      )}
+      {solicitud?.voluntario?.emergencia && (
+        <InformacionSaludEmergencia voluntario={solicitud?.voluntario} />
+      )}
+    </TabPanel>
   );
 }

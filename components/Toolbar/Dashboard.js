@@ -4,8 +4,6 @@ import CommnentIcon from "@mui/icons-material/CommentBankOutlined";
 export default function Component(props) {
   const { user, type = "secondary", children = null } = props;
 
-  console.log("useruser: ", user);
-
   const title = `Bienvenido ${user.primerNombre} ${user.primerApellido}!`;
   return (
     <Toolbar>

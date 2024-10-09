@@ -1,8 +1,6 @@
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -155,13 +153,6 @@ export default function Page() {
                   />
                 )}
               </Box>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Recuperar contraseña
-                  </Link>
-                </Grid>
-              </Grid>
             </Box>
           </Box>
         </Paper>
