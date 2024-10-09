@@ -26,7 +26,7 @@ import {
 /* Icons */
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/HomeOutlined";
-import AccountIcon from "@mui/icons-material/AccountCircle";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SettingIcon from "@mui/icons-material/Settings";
 
 /* Components */
@@ -167,6 +167,7 @@ function DashboardContent({ page, children }) {
   const [open, setOpen] = React.useState(true);
   const [searchOpen, setSearchOpen] = React.useState(true);
   const [openNotify, setOpenNotify] = React.useState(false);
+  const [user, setUser] = React.useState();
   const inputRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -212,6 +213,15 @@ function DashboardContent({ page, children }) {
     Cookies.remove("token");
     Cookies.remove("user-info");
   };
+
+  React.useEffect(() => {
+    const userCookie = Cookies.get("user-info");
+    const user = JSON?.parse(decodeURIComponent(userCookie));
+
+    if (user) {
+      setUser(user);
+    }
+  }, [Cookies]);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -279,7 +289,7 @@ function DashboardContent({ page, children }) {
               aria-haspopup="true"
               onClick={handleMenuProfile}
             >
-              <AccountIcon fontSize="small" />
+              <AccountCircleOutlinedIcon fontSize="small" />
             </IconButton>
           </Stack>
           <Menu
@@ -304,7 +314,8 @@ function DashboardContent({ page, children }) {
               //onClick={handleClose}
             >
               <Link href="/profile">
-                <AccountIcon /> Perfil
+                <AccountCircleOutlinedIcon /> {user?.primerNomber}{" "}
+                {user?.primerApellido}
               </Link>
             </MenuItem>
             <MenuItem dense onClick={handleClose}>
