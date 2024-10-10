@@ -59,6 +59,13 @@ const routeDashboard = {
     url: "/usuarios",
     to: "/usuarios",
   },
+  sedes: {
+    name: "Sedes",
+    icon: <AppRegistration />,
+    href: "/sedes",
+    url: "/sedes",
+    to: "/sedes",
+  },
 };
 
 export { routePage, routeDashboard };
