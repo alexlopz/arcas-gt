@@ -13,6 +13,7 @@ const initialState = {
     isSuccess: true,
     message: "",
   },
+  loadPlanes: false, // Estado para los planes
 };
 
 // Acciones
@@ -23,6 +24,7 @@ const SET_LOAD_USERS = "SET_LOAD_USERS";
 const SET_LOAD_SOLICITUDES = "SET_LOAD_SOLICITUDES";
 const SET_DOCUMENTO_PAGO = "SET_DOCUMENTO_PAGO";
 const SET_ALERT_MESSAGE = "SET_ALERT_MESSAGE";
+const SET_LOAD_PLANES = "SET_LOAD_PLANES"; // Nueva acción para planes
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -60,6 +62,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         alertMessage: action.payload,
+      };
+    case SET_LOAD_PLANES:
+      return {
+        ...state,
+        loadPlanes: action.payload, // Manejador de recarga de planes
       };
     default:
       throw new Error(`Acción no manejada: ${action.type}`);
@@ -103,6 +110,10 @@ const AppContextProvider = ({ children }) => {
     dispatch({ type: SET_ALERT_MESSAGE, payload: alert });
   };
 
+  const setLoadPlanes = (value) => {  // Manejador para cargar planes
+    dispatch({ type: SET_LOAD_PLANES, payload: value });
+  };
+
   const value = useMemo(
     () => ({
       isModalOpen: state.isModalOpen,
@@ -112,6 +123,7 @@ const AppContextProvider = ({ children }) => {
       voluntario: state.voluntario,
       documentoPago: state.documentoPago,
       alertMessage: state.alertMessage,
+      loadPlanes: state.loadPlanes,  // Estado para los planes
       openModal,
       closeModal,
       setLoadUsers,
@@ -119,6 +131,7 @@ const AppContextProvider = ({ children }) => {
       setNewVoluntario,
       setDocumentoPago,
       setAlertMessage,
+      setLoadPlanes,  // Función para cargar planes
     }),
     [
       state.isModalOpen,
@@ -128,6 +141,7 @@ const AppContextProvider = ({ children }) => {
       state.voluntario,
       state.documentoPago,
       state.alertMessage,
+      state.loadPlanes,  // Incluye el estado en los valores de contexto
     ]
   );
 
