@@ -24,7 +24,9 @@ export default function Page(props) {
   };
 
   return (
-    <DashboardLayout page={"Sedes"}> {/* Cambiar el título de la página a "Sedes" */}
+    <DashboardLayout page={"Sedes"}>
+      {" "}
+      {/* Cambiar el título de la página a "Sedes" */}
       <Paper
         sx={{
           p: 4,
@@ -73,10 +75,10 @@ export async function getServerSideProps(context) {
 
   const userCookie = cookies.get("user-info");
   const user = JSON.parse(decodeURIComponent(userCookie));
-  
+
   // Llamamos al servicio getSedes con el token obtenido
   const sedes = await getSedes(token);
 
   // Devolvemos las sedes y el usuario
-  return { props: { user, sedes } };
+  return { props: { user, sedes: sedes?.reverse() } };
 }

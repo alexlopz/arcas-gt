@@ -2,21 +2,15 @@ import { useState, useEffect } from "react";
 import { createSede, updateSede } from "@src/services/sedes"; // Asegúrate de que esta ruta sea correcta
 import { useAppContext } from "@src/context/AppContext"; // Asegúrate de que esta ruta también sea correcta
 
-import {
-  Box,
-  TextField,
-  Button,
-  Grid,
-  CircularProgress,
-} from "@mui/material";
+import { Box, TextField, Button, Grid, CircularProgress } from "@mui/material";
 
 const formDataDefault = {
   nombre: "",
   descripcion: "",
 };
 
-export default function     ({ handleCancelAction, isEdicion, edicionData }) {
-  const { setLoadSedes } = useAppContext();
+export default function ({ handleCancelAction, isEdicion, edicionData }) {
+  const { setLoadUsers } = useAppContext();
   const [formData, setFormData] = useState(formDataDefault);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -84,7 +78,7 @@ export default function     ({ handleCancelAction, isEdicion, edicionData }) {
 
         if (sede) {
           setFormData(formDataDefault); // Reiniciar el formulario
-          setLoadSedes(true); // Recargar la lista de sedes
+          setLoadUsers(true); // Recargar la lista de sedes
           handleCancelAction(); // Cerrar el modal
         }
       } catch (error) {
