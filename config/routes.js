@@ -3,6 +3,7 @@ import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import Person4OutlinedIcon from "@mui/icons-material/Person4Outlined";
 import PendingActionsOutlinedIcon from "@mui/icons-material/PendingActionsOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 
 /* Homepage routes */
 const routePage = {
@@ -61,7 +62,7 @@ const routeDashboard = {
   },
   sedes: {
     name: "Sedes",
-    icon: <AppRegistration />,
+    icon: <AccountBalanceOutlinedIcon />,
     href: "/sedes",
     url: "/sedes",
     to: "/sedes",

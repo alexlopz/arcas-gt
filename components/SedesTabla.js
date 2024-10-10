@@ -10,7 +10,7 @@ import ConfirmDialog from "./ConfirmDialog"; // Reutilizamos el mismo ConfirmDia
 
 export default function SedesTabla(props) {
   const { data, handleClickEdicion } = props;
-  const { loadSedes, setLoadSedes } = useAppContext(); // Cambiar el contexto a "sedes"
+  const { loadUsers, setLoadUsers } = useAppContext(); // Cambiar el contexto a "sedes"
 
   const [rows, setRows] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -49,7 +49,7 @@ export default function SedesTabla(props) {
   const getSedesList = async () => {
     const sedes = await getSedes(); // Llamada al servicio de sedes
     if (sedes) {
-      setRows(sedes);
+      setRows(sedes?.reverse());
     }
   };
 
@@ -64,11 +64,11 @@ export default function SedesTabla(props) {
   };
 
   useEffect(() => {
-    if (loadSedes) {
+    if (loadUsers) {
       getSedesList(); // Cargamos las sedes si el estado "loadSedes" está en true
-      setLoadSedes(false);
+      setLoadUsers(false);
     }
-  }, [loadSedes]);
+  }, [loadUsers]);
 
   useEffect(() => {
     if (data) {
