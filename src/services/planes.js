@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export const getPlanesAll = async (token) => {
+export const getPlanes = async (token) => {
   try {
     const tokenRequest = token ? token : Cookies.get("token");
 
@@ -27,8 +27,6 @@ export const getPlanesAll = async (token) => {
     return null;
   }
 };
-
-
 
 //listar sedes:
 export const getSedes = async (token) => {
@@ -56,8 +54,6 @@ export const getSedes = async (token) => {
     return null;
   }
 };
-
-
 
 // Crear un nuevo plan
 export const createPlan = async (payload) => {
@@ -88,8 +84,6 @@ export const createPlan = async (payload) => {
   }
 };
 
-
-
 // Actualizar un plan existente
 export const updatePlan = async (payload) => {
   try {
@@ -119,8 +113,6 @@ export const updatePlan = async (payload) => {
     return null;
   }
 };
-
-
 
 // Eliminar un plan
 export const deletePlan = async (planId) => {

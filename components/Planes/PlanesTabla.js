@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Box, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useAppContext } from "@src/context/AppContext";
-import { getPlanesAll, deletePlan } from "@src/services/planes"; // Importar los servicios de planes
+import { getPlanes, deletePlan } from "@src/services/planes"; // Importar los servicios de planes
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ConfirmDialog from "../ConfirmDialog";
@@ -52,7 +52,7 @@ export default function PlanesTabla(props) {
 
   // Función para cargar los planes desde el servicio
   const getPlanes = async () => {
-    const planes = await getPlanesAll();
+    const planes = await getPlanes();
     if (planes) {
       setRows(planes);
     }
