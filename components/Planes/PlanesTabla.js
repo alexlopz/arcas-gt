@@ -51,10 +51,11 @@ export default function PlanesTabla(props) {
   ];
 
   // Función para cargar los planes desde el servicio
-  const getPlanes = async () => {
+  const getPlanesAll = async () => {
     const planes = await getPlanes();
+    console.log("Planes: ", planes);
     if (planes) {
-      setRows(planes);
+      setRows(planes?.reverse());
     }
   };
 
@@ -82,7 +83,7 @@ export default function PlanesTabla(props) {
   useEffect(() => {
     if (loadPlanes) {
       setLoadPlanes(false);
-      getPlanes();
+      getPlanesAll();
     }
   }, [loadPlanes]);
 

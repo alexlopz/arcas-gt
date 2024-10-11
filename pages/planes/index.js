@@ -86,6 +86,12 @@ export async function getServerSideProps(context) {
   const userCookie = cookies.get("user-info");
   const user = JSON.parse(decodeURIComponent(userCookie));
 
-  const planes = await getPlanes(token); // Carga inicial de planes desde el servidor
+  let planes = await getPlanes(token); // Carga inicial de planes desde el servidor
+  
+  //hacer la reversa de los planes
+  if (planes) {
+    planes.reverse();
+  }
+
   return { props: { user, planes } };
 }
