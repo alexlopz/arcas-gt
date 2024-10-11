@@ -17,10 +17,20 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { constant } from "@config/constants";
 import Copyright from "@components/Copyright";
 import RegistroUsuarios from "@components/forms/registro";
+import RegistroUsuariosPublic from "@components/forms-public/registro";
 
 const theme = createTheme();
 
 export default function Page() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
+  };
+
   const style = {
     boxContainer: {
       position: "relative",
@@ -29,6 +39,8 @@ export default function Page() {
       height: "100vh",
       display: "block",
       overflow: "hidden",
+      // backgroundImage:
+      //   "url(https://images.unsplash.com/photo-1586074299757-dc655f18518c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1152&h=1152&q=80)",
       "::before, ::after": {
         content: '" "',
         position: "absolute",
@@ -95,8 +107,95 @@ export default function Page() {
           <Typography component="h1" variant="h5">
             Registro solicitud
           </Typography>
+          {/* <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  size="small"
+                  autoComplete="given-name"
+                  name="firstName"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  size="small"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  size="small"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  size="small"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      size="small"
+                      value="allowExtraEmails"
+                      color="primary"
+                    />
+                  }
+                  label={
+                    <Typography variant="body2" component="p">
+                      I want to receive inspiration, marketing promotions and
+                      updates via email.
+                    </Typography>
+                  }
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="/auth/signin" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+          </Box> */}
           <Box sx={{ width: "100%" }}>
-            <RegistroUsuarios />
+            <RegistroUsuariosPublic />
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
