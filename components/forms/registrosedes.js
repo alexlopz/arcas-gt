@@ -72,6 +72,7 @@ export default function ({ handleCancelAction, isEdicion, edicionData }) {
       try {
         if (isEdicion) {
           sede = await updateSede(formData); // Actualizar la sede si estamos en modo edición
+          handleCancelAction();
         } else {
           sede = await createSede(formData); // Crear una nueva sede si no estamos en modo edición
         }
