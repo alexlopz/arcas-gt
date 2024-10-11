@@ -7,7 +7,7 @@ import PlanesTabla from "@components/Planes/PlanesTabla";
 import { useAppContext } from "@src/context/AppContext";
 
 import { useState } from "react";
-import { getPlanesAll } from "@src/services/planes";
+import { getPlanes } from "@src/services/planes";
 
 export default function Page(props) {
   const { planes } = props;
@@ -15,7 +15,7 @@ export default function Page(props) {
   const [edicionData, setEdicionData] = useState();
 
   // Estado para controlar cuándo recargar los planes
-  const [loadPlanesManual, setLoadPlanesManual] = useState(false);  // Este estado controla la recarga
+  const [loadPlanesManual, setLoadPlanesManual] = useState(false); // Este estado controla la recarga
 
   const handleClickEdicion = (row) => {
     setEdicionData(row);
@@ -63,9 +63,8 @@ export default function Page(props) {
         <PlanesTabla
           data={planes}
           handleClickEdicion={handleClickEdicion}
-          loadPlanesManual={loadPlanesManual}  // Pasamos el estado de recarga a la tabla
-          setLoadPlanesManual={setLoadPlanesManual}  // Pasamos la función para actualizar el estado
-       
+          loadPlanesManual={loadPlanesManual} // Pasamos el estado de recarga a la tabla
+          setLoadPlanesManual={setLoadPlanesManual} // Pasamos la función para actualizar el estado
         />
       </Paper>
     </DashboardLayout>
@@ -87,6 +86,6 @@ export async function getServerSideProps(context) {
   const userCookie = cookies.get("user-info");
   const user = JSON.parse(decodeURIComponent(userCookie));
 
-  const planes = await getPlanesAll(token); // Carga inicial de planes desde el servidor
+  const planes = await getPlanes(token); // Carga inicial de planes desde el servidor
   return { props: { user, planes } };
 }
