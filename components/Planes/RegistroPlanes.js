@@ -124,7 +124,7 @@ export default function RegistroPlanes(props) {
         }
       } catch (error) {
         console.error("Error guardando plan: ", error);
-        setAlertMessage({ open: true, isSuccess: false }); // Alerta de error
+        setAlertMessage({ open: true, isSuccess: false, type: "error" }); // Alerta de error
       }
 
       setLoading(false); // Quitar el indicador de carga

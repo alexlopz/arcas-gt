@@ -115,6 +115,14 @@ export default function RegistroUsuarios(props) {
     setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
+  const resetStates = (user) => {
+    setFormData(formDataDefault);
+    setNewVoluntario(user);
+    setLoadUsers(true);
+    setAlertMessage({ open: true, isSuccess: true });
+    setLoading(false);
+    handleCancelAction();
+  };
   // Manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -135,19 +143,20 @@ export default function RegistroUsuarios(props) {
 
       if (isEdicion) {
         user = await updateUser(formData);
+        if (user) {
+          resetStates();
+        }
+        return;
       } else {
         user = await createUser(formData);
       }
 
       if (user) {
-        setFormData(formDataDefault);
-        setNewVoluntario(user);
-        setLoadUsers(true);
-        setAlertMessage({ open: true, isSuccess: true });
-        handleCancelAction();
+        resetStates(user);
         return;
+      } else {
+        setAlertMessage({ open: true, isSuccess: false, type: "error" });
       }
-      setAlertMessage({ open: true, isSuccess: false });
     }
 
     setLoading(false);

@@ -12,6 +12,7 @@ const initialState = {
     open: false,
     isSuccess: true,
     message: "",
+    type: "success",
   },
   loadPlanes: false, // Estado para los planes
 };
@@ -105,12 +106,14 @@ const AppContextProvider = ({ children }) => {
       message: value?.isSuccess
         ? "Proceso realizado con exito!"
         : "Ocurrio un error!",
+      type: value.type ? value.type : "success",
     };
 
     dispatch({ type: SET_ALERT_MESSAGE, payload: alert });
   };
 
-  const setLoadPlanes = (value) => {  // Manejador para cargar planes
+  const setLoadPlanes = (value) => {
+    // Manejador para cargar planes
     dispatch({ type: SET_LOAD_PLANES, payload: value });
   };
 
@@ -123,7 +126,7 @@ const AppContextProvider = ({ children }) => {
       voluntario: state.voluntario,
       documentoPago: state.documentoPago,
       alertMessage: state.alertMessage,
-      loadPlanes: state.loadPlanes,  // Estado para los planes
+      loadPlanes: state.loadPlanes, // Estado para los planes
       openModal,
       closeModal,
       setLoadUsers,
@@ -131,7 +134,7 @@ const AppContextProvider = ({ children }) => {
       setNewVoluntario,
       setDocumentoPago,
       setAlertMessage,
-      setLoadPlanes,  // Función para cargar planes
+      setLoadPlanes, // Función para cargar planes
     }),
     [
       state.isModalOpen,
@@ -141,7 +144,7 @@ const AppContextProvider = ({ children }) => {
       state.voluntario,
       state.documentoPago,
       state.alertMessage,
-      state.loadPlanes,  // Incluye el estado en los valores de contexto
+      state.loadPlanes, // Incluye el estado en los valores de contexto
     ]
   );
 

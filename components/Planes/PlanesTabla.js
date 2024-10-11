@@ -73,7 +73,7 @@ export default function PlanesTabla(props) {
       setAlertMessage({ open: true, isSuccess: true }); // Alerta de éxito
     } catch (error) {
       console.error("Error al eliminar el plan: ", error);
-      setAlertMessage({ open: true, isSuccess: false }); // Alerta de error
+      setAlertMessage({ open: true, isSuccess: false, type: "error" }); // Alerta de error
     } finally {
       setOpenModal(false); // Cerrar el modal
     }

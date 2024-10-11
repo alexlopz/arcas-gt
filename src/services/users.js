@@ -47,12 +47,10 @@ export const updateUser = async (payload) => {
       throw new Error(`Ocurrio un error`);
     }
 
-    const result = await response.json();
-
-    return result;
+    return true;
   } catch (error) {
     console.error(error);
-    return null;
+    return false;
   }
 };
 
