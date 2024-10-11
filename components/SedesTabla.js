@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react";
-import { Button, Box, IconButton } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useAppContext } from "@src/context/AppContext";
-import { deleteSede, getSedes } from "@src/services/sedes"; // Cambiar a funciones para sedes
+import { deleteSede, getSedes } from "@src/services/sedes";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import ConfirmDialog from "./ConfirmDialog"; // Reutilizamos el mismo ConfirmDialog
+import ConfirmDialog from "./ConfirmDialog";
 
 export default function SedesTabla(props) {
   const { data, handleClickEdicion } = props;
-  const { loadUsers, setLoadUsers } = useAppContext(); // Cambiar el contexto a "sedes"
+  const { loadUsers, setLoadUsers } = useAppContext(); 
 
   const [rows, setRows] = useState([]);
   const [openModal, setOpenModal] = useState(false);
-  const [sede, setSede] = useState(); // Cambiar de "user" a "sede"
+  const [sede, setSede] = useState(); 
   const paginationModel = { page: 0, pageSize: 5 };
 
-  // Definimos las columnas basadas en Nombre y Descripción
+  // Definir las columnas para la tabla de sedes
   const columns = [
     { field: "id", headerName: "ID", maxWidth: 10 },
     { field: "nombre", headerName: "Nombre", flex: 1 },
@@ -47,7 +47,7 @@ export default function SedesTabla(props) {
 
   // Obtener las sedes usando el servicio "getSedes"
   const getSedesList = async () => {
-    const sedes = await getSedes(); // Llamada al servicio de sedes
+    const sedes = await getSedes();
     if (sedes) {
       setRows(sedes?.reverse());
     }
@@ -59,20 +59,29 @@ export default function SedesTabla(props) {
   };
 
   const handleClickEliminar = async () => {
-    await deleteSede(sede.id); // Usamos "deleteSede" para eliminar la sede
-    //setLoadSedes(true); // Actualizamos el estado para volver a cargar las sedes
+    try {
+      await deleteSede(sede.id); // Eliminar la sede
+      setLoadUsers(true); // Actualizar el estado para recargar las sedes
+    } catch (error) {
+      console.error("Error al eliminar la sede: ", error);
+    } finally {
+      setOpenModal(false); // Cerrar el modal
+    }
   };
 
+  // Efecto para cargar las sedes cuando el estado "loadUsers" cambie
   useEffect(() => {
     if (loadUsers) {
-      getSedesList(); // Cargamos las sedes si el estado "loadSedes" está en true
-      setLoadUsers(false);
+      getSedesList(); // Cargar las sedes
+      setLoadUsers(false); // Resetear el estado de carga
+      //  setOpenModal(false);
     }
   }, [loadUsers]);
 
   useEffect(() => {
     if (data) {
-      setRows(data); // Actualizamos las filas si "data" cambia
+      setRows(data); // Actualizar las filas si "data" cambia
+      //setOpenModal(false);
     }
   }, [data]);
 
@@ -80,7 +89,7 @@ export default function SedesTabla(props) {
     <Box>
       <Box padding={0} display="flex" justifyContent="space-between">
         <Box>
-          <h2>Sedes</h2> {/* Cambiar el título a "Sedes" */}
+          <h2>Sedes</h2>
         </Box>
       </Box>
       <Box marginTop={2} marginBottom={2}>

@@ -2,31 +2,29 @@ import { Paper, Button, Box } from "@mui/material";
 import Cookies from "cookies";
 
 import DashboardLayout from "@layouts/DashboardLayout";
-import SedeModal from "@components/SedesModal"; // Cambiar el modal a SedeModal
-import { getSedes } from "@src/services/sedes"; // Importar el servicio para sedes
-import SedesTabla from "@components/SedesTabla"; // Cambiar a la tabla de sedes
+import SedeModal from "@components/SedesModal";
+import { getSedes } from "@src/services/sedes"; 
+import SedesTabla from "@components/SedesTabla";
 import { useAppContext } from "@src/context/AppContext";
 import { useState } from "react";
 
 export default function Page(props) {
-  const { sedes } = props; // Aquí traemos las sedes desde getServerSideProps
-  const { isModalOpen, openModal, closeModal } = useAppContext();
-  const [edicionData, setEdicionData] = useState(); // Estado para manejar la edición
+  const { sedes } = props; 
+  const { isModalOpen, openModal, closeModal, setLoadUsers } = useAppContext();
+  const [edicionData, setEdicionData] = useState();
 
   const handleClickEdicion = (row) => {
     setEdicionData(row);
-    openModal(); // Abre el modal para editar una sede
+    openModal();
   };
 
   const handleClickRegistro = () => {
-    setEdicionData(null); // Limpiar los datos de edición para crear una nueva sede
-    openModal(); // Abre el modal para crear una nueva sede
+    setEdicionData(null);
+    openModal();
   };
 
   return (
     <DashboardLayout page={"Sedes"}>
-      {" "}
-      {/* Cambiar el título de la página a "Sedes" */}
       <Paper
         sx={{
           p: 4,
@@ -42,18 +40,21 @@ export default function Page(props) {
             sx={{ mt: 1, mb: 2 }}
             onClick={handleClickRegistro}
           >
-            Crear Sede {/* Cambiar a "Crear Sede" */}
+            Crear Sede
           </Button>
         </Box>
         <SedeModal
           open={isModalOpen}
-          handleClose={closeModal}
-          isEdicion={edicionData !== null} // Si hay datos de edición, el modal se usa para editar
-          edicionData={edicionData} // Pasar los datos de la sede en caso de edición
+          handleClose={() => {
+            closeModal();
+            setLoadUsers(true); // Forzar la recarga cuando se cierre el modal
+          }}
+          isEdicion={edicionData !== null}
+          edicionData={edicionData}
         />
         <SedesTabla
-          data={sedes} // Pasamos las sedes a la tabla
-          handleClickEdicion={handleClickEdicion} // Manejador de clic para editar sedes
+          data={sedes}
+          handleClickEdicion={handleClickEdicion}
         />
       </Paper>
     </DashboardLayout>
@@ -76,9 +77,7 @@ export async function getServerSideProps(context) {
   const userCookie = cookies.get("user-info");
   const user = JSON.parse(decodeURIComponent(userCookie));
 
-  // Llamamos al servicio getSedes con el token obtenido
   const sedes = await getSedes(token);
 
-  // Devolvemos las sedes y el usuario
   return { props: { user, sedes: sedes?.reverse() } };
 }
