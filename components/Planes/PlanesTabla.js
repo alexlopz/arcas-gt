@@ -53,8 +53,9 @@ export default function PlanesTabla(props) {
   // Función para cargar los planes desde el servicio
   const getPlanesAll = async () => {
     const planes = await getPlanes();
+    console.log("Planes: ", planes);
     if (planes) {
-      setRows(planes);
+      setRows(planes?.reverse());
     }
   };
 
